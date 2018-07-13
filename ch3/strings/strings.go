@@ -2,13 +2,14 @@
 
 // Exercise 3.11: Enhance comma so that it deals correctly with floating-point numbers and an optional sign.
 
-// TODO: Exercise 3.12: Write a function that reports whether two strings are anagrams of each other, that is, they contain the same letters in a different order.
+// Exercise 3.12: Write a function that reports whether two strings are anagrams of each other, that is, they contain the same letters in a different order.
 
 package main
 
 import (
 	"bytes"
 	"fmt"
+	"reflect"
 	"strings"
 )
 
@@ -23,7 +24,6 @@ func comma(s string) string {
 	}
 
 	return comma(string(runes[:n-3])) + "," + string(runes[n-3:])
-	// return comma(s[:n-3]) + "," + s[n-3:]
 }
 
 func trimLeftChar(s string) string {
@@ -74,6 +74,24 @@ func reverse(s string) string {
 	return string(runes)
 }
 
+func mapString(s string) map[rune]int {
+	rmap := make(map[rune]int)
+	runes := []rune(s)
+	for _, r := range runes {
+		rmap[r]++
+	}
+	return rmap
+}
+
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+	sMap := mapString(s)
+	tMap := mapString(t)
+	return reflect.DeepEqual(sMap, tMap)
+}
+
 func main() {
 	fmt.Println(nonRecursiveComma("12345"))
 	fmt.Println(nonRecursiveComma("123456"))
@@ -87,4 +105,7 @@ func main() {
 	fmt.Println(enhancedComma("12"))
 
 	fmt.Println(comma("プローグラム"))
+	fmt.Println(isAnagram("Hello", "olleH"))
+	fmt.Println(isAnagram("Hello", "Hello!"))
+	fmt.Println(isAnagram("H", "H"))
 }
