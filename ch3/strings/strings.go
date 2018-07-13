@@ -15,11 +15,15 @@ import (
 // Note: recursive comma() included for reference
 // comma inserts commas in a non-negative decimal integer string.
 func comma(s string) string {
-	n := len(s)
+	runes := []rune(s)
+	n := len(runes)
+
 	if n <= 3 {
 		return s
 	}
-	return comma(s[:n-3]) + "," + s[n-3:]
+
+	return comma(string(runes[:n-3])) + "," + string(runes[n-3:])
+	// return comma(s[:n-3]) + "," + s[n-3:]
 }
 
 func trimLeftChar(s string) string {
@@ -82,4 +86,5 @@ func main() {
 	fmt.Println(enhancedComma("-12345678345634556.99999999"))
 	fmt.Println(enhancedComma("12"))
 
+	fmt.Println(comma("プローグラム"))
 }
